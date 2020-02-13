@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/cs141/Desktop/project_2_work/hdl/alu.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module alu
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/cs141/Desktop/project_2_work/hdl/alu_tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module alu_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/cs141/Desktop/project_2_work/build/project_2/project_2.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

@@ -1,0 +1,8 @@
+0.6
+2019.1
+May 24 2019
+14:51:52
+/home/cs141/Desktop/project_2_work/build/project_2/project_2.sim/sim_1/behav/xsim/glbl.v,1558713910,verilog,,,,glbl,,,,,,,,
+/home/cs141/Desktop/project_2_work/hdl/alu.sv,1581562961,systemVerilog,,/home/cs141/Desktop/project_2_work/hdl/alu_tb.sv,,alu,,,../../../../../../hdl,,,,,
+/home/cs141/Desktop/project_2_work/hdl/alu.svh,1581098412,verilog,,,,,,,,,,,,
+/home/cs141/Desktop/project_2_work/hdl/alu_tb.sv,1581562981,systemVerilog,,,/home/cs141/Desktop/project_2_work/hdl/alu.svh,alu_tb,,,../../../../../../hdl,,,,,

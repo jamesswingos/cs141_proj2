@@ -17,7 +17,7 @@ module alu_tb;
 	// Instantiate the Unit Under Test (UUT)
 	alu uut (
 		.x, 
-		.y, 
+		.y,
 		.z, 
 		.op, 
 		.equal, 
@@ -34,8 +34,7 @@ module alu_tb;
 		y = 0;
 		op = 0;
 		j = 0;
-
-		// YOUR CODE HERE
+        // your code here
 		// loop through all important test vectors
 		// this triggers the always block
 		$finish;
