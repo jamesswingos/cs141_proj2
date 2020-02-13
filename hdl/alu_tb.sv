@@ -34,7 +34,6 @@ module alu_tb;
 		y = 0;
 		op = 0;
 		j = 0;
-        // your code here
 		// loop through all important test vectors
 		// this triggers the always block
 		$finish;

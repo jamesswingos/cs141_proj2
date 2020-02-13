@@ -18,12 +18,11 @@ module alu
     logic [3:0] res_tmp;
     logic [1:0] eq_tmp;
     logic zer_tmp;
+	logic [3:0] tmp;
     
     // add and subtract multiplex
     assign c[0] = op[0] ? 1'b0 : 1'b1;
     assign y = op[0] ? y : ~y;
-
-	logic [3:0] tmp;
     
     // and
     assign and_res = x & y;
