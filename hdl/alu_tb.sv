@@ -46,13 +46,29 @@ module alu_tb;
 		case (op)
 			`ALU_AND: begin
 				if (z !== (x & y)) begin
-					$display("ERROR: ADD:  op = %b, x = %h, y = %h, z = %h", op, x, y, z);
+					$display("ERROR: op = %b, x = %h, y = %h, z = %h", op, x, y, z);
 					error = error + 1;
 				end
 			end
 			`ALU_ADD: begin
+			    if (z !== (x + y)) begin
+					$display("ERROR: op = %b, x = %h, y = %h, z = %h", op, x, y, z);
+					error = error + 1;
+			    end
+			    if (z[7:0]!== 8'b00000000 && x[7:0] == 8'b11111111 && y[7:0] == 8'b11111111) begin
+			        $display("ERROR: op = %b, x = %h, y = %h, z = %h", op, x, y, z);
+					error = error + 1;
+			    end
             end
 			`ALU_SUB: begin
+			    if (z !== (x - y)) begin
+					$display("ERROR: op = %b, x = %h, y = %h, z = %h", op, x, y, z);
+					error = error + 1;
+				end
+				if (z[7:0]!== 8'b00000000 && x[7:0] == 8'b11111111 && y[7:0] == 8'b11111111) begin
+			        $display("ERROR: op = %b, x = %h, y = %h, z = %h", op, x, y, z);
+					error = error + 1;
+			    end
 			end
 			`ALU_SLT: begin
 			end
@@ -63,7 +79,10 @@ module alu_tb;
 			`ALU_SRA: begin
 			end
 			default : begin
-				// executes if no op codes are matched
+				if (op!== 3'b000 || 3'b001 || 3'b010) begin
+			        $display("ERROR: reserved op used, op = %b", op);
+					error = error + 1;
+			    end
 			end
 		endcase
 	end
