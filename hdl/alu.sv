@@ -22,7 +22,7 @@ module alu
     
     // add and subtract multiplex
     assign c[0] = op[0] ? 1'b0 : 1'b1;
-    assign y = op[0] ? y : ~y;
+    //assign y = op[0] ? y : -y;
     
     // and
     assign and_res = x & y;
@@ -46,9 +46,9 @@ module alu
     // reserve checker for 000, 001, 010
     assign res_tmp[0] = op[0] && op[1];
     assign res_tmp[1] = res_tmp[0] || op[2];
-    // ovfl res checker for 001, 010
-    assign res_tmp[2] = ~op[0] && ~op[1];
-    assign res_tmp[3] = ~(res_tmp[1] && res_tmp[2]);
+    // ovfl res checker for 001, 010 
+    assign res_tmp[2] = !op[0] && !op[1];
+    assign res_tmp[3] = !(res_tmp[1] || res_tmp[2]);
     
     // equal flag
     assign eq_tmp[0] = x ~^ y;
@@ -57,7 +57,7 @@ module alu
     
     // zero flag
     assign zer_tmp = ~| z;
-    assign zero = zer_tmp & ~res_tmp[1];
+    assign zero = zer_tmp && !res_tmp[1];
     
     // overflow flag
     assign overflow = c[32] && res_tmp[3];

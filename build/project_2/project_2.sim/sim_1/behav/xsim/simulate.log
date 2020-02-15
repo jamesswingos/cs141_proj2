@@ -1,3 +1,7 @@
 Vivado Simulator 2019.1
 Time resolution is 1 ps
-$finish called at time : 0 fs : File "/home/cs141/Desktop/project_2_work/hdl/alu_tb.sv" Line 39
+ERROR: op = 001, x = ffffffff, y = ffffffff, z = xxxxxxxX
+ERROR: op = 001, x = ffffffff, y = ffffffff, z = xxxxxxxX
+ERROR: op = 010, x = ffffffff, y = ffffffff, z = xxxxxxxX
+ERROR: op = 010, x = ffffffff, y = ffffffff, z = xxxxxxxX
+$finish called at time : 400 ns : File "/home/cs141/Desktop/project_2_work/hdl/alu_tb.sv" Line 63
