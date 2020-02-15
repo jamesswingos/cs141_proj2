@@ -8,6 +8,7 @@ module alu
     );
     
     logic [32:0] c;
+    logic [31:0] ynew;
     logic [32:0] and_res;
     logic [32:0] add_res;
     logic [32:0] slt_res;
@@ -15,14 +16,26 @@ module alu
     logic [32:0] sra_res;
     logic [32:0] sll_res;
     logic [32:0] res_res;
-    logic [3:0] res_tmp;
-    logic [1:0] eq_tmp;
+    logic [4:0] res_tmp;
+    logic [31:0] eq_tmp0;
+    logic eq_tmp1;
+    logic [31:0] tmp0;
+    logic [31:0] tmp1;
+    logic [31:0] tmp2;
+    logic [31:0] tmp3;
+    logic [31:0] tmp4;
     logic zer_tmp;
-	logic [3:0] tmp;
+	
+	//assigning empties 
+	assign slt_res = 32'b00000000000000000000000000000000;
+    assign srl_res = 32'b00000000000000000000000000000000;
+    assign sra_res = 32'b00000000000000000000000000000000;
+    assign sll_res = 32'b00000000000000000000000000000000;
+    assign res_res = 32'b00000000000000000000000000000000;
     
     // add and subtract multiplex
     assign c[0] = op[0] ? 1'b0 : 1'b1;
-    //assign y = op[0] ? y : -y;
+    assign ynew = op[0] ? y : ~y;
     
     // and
     assign and_res = x & y;
@@ -31,13 +44,14 @@ module alu
     generate
         genvar i;
         for (i = 0; i < 32; i = i + 1) begin
-            xor mid1 (tmp[0], x[i], y[i]);
-            xor mid2 (add_res[0], c[i], tmp[0]);
-            and ca (tmp[1], x[i], y[i]);
-            and cb (tmp[2], x[i], c[i]);
-            and cc (tmp[3], y[i], c[i]);
-            or fin (c[i+1], tmp[1], tmp[2], tmp[3]);
-        end
+            xor mid1 (tmp0[i], x[i], ynew[i]);
+            xor mid2 (add_res[i], c[i], tmp0[i]);
+            and ca (tmp1[i], x[i], ynew[i]);
+            and cb (tmp2[i], x[i], c[i]);
+            and cc (tmp3[i], ynew[i], c[i]);
+            or fin1 (tmp4[i], tmp1[i], tmp2[i]);
+            or fin2 (c[i+1], tmp4[i], tmp3[i]);
+            end
     endgenerate
     
     // multiplex
@@ -51,15 +65,16 @@ module alu
     assign res_tmp[3] = !(res_tmp[1] || res_tmp[2]);
     
     // equal flag
-    assign eq_tmp[0] = x ~^ y;
-    assign eq_tmp[1]  = & eq_tmp[0];
-    assign equal = eq_tmp[1] & ~res_tmp[1];
+    assign eq_tmp0 = ~(x ^ y);
+    assign eq_tmp1 = &eq_tmp0;
+    assign equal = eq_tmp1 && !res_tmp[1];
     
     // zero flag
     assign zer_tmp = ~| z;
     assign zero = zer_tmp && !res_tmp[1];
     
     // overflow flag
-    assign overflow = c[32] && res_tmp[3];
+    assign res_tmp[4] = c[31] ^ c[32];
+    assign overflow = res_tmp[4] && res_tmp[3];
 
 endmodule

@@ -4,12 +4,12 @@
 // constructs used here will not synthesize, but will simulate
 module alu_tb;
 	// Inputs
-	logic signed [31:0] x;
-	logic signed [31:0] y;
+	logic [31:0] x;
+	logic [31:0] y;
 	logic [2:0] op;
 
 	// Outputs
-	logic signed [31:0] z;
+	logic [31:0] z;
 	logic equal;
 	logic overflow;
 	logic zero;
@@ -34,28 +34,50 @@ module alu_tb;
 		y = 0;
 
 		for (int i = 0; i <= 4'b0111; i++) begin
-            // test all zero's
+		
+            // test same: equal = high, for 010 zero = high 
             op = i;
-            x = 32'b00000000000000000000000011111111;
-            y = 32'b00000000000000000000000011111111;
+            x = 32'b00001100000000000000000011111111;
+            y = 32'b00001100000000000000000011111111;
             #10;
+            
+            // test all zeros: equal = high, for 000 zero = high, for 001 zero=high, for 010 zero = high
             x = 32'b00000000000000000000000000000000;
             y = 32'b00000000000000000000000000000000;
+            #10;
+            
+            // test all one's: equal: high, for 010 zero = high
+            x = 32'b11111111111111111111111111111111;
+            y = 32'b11111111111111111111111111111111;
             #10;
     
-            // test all one's for overflow
-            x = 32'b11111111111111111111111111111111;
-            y = 32'b00000000000000000000000000000000;
+            // test alternating opposites, for 000 zero = high, for 010 zero = high AND overflow = high
+            x = 32'b01010101010101010101010101010101;
+            y = 32'b10101010101010101010101010101010;
             #10;
             
-            // test all one's for overflow
-            x = 32'b00000000000000000000000000000000;
-            y = 32'b11111111111111111111111111111111;
+            // test for negative add overflow 
+            // for 001 overflow=high,
+            x = 32'b10000000000000000000000000000110;
+            y = 32'b10000000000000000000000000000001;
             #10;
             
-            // test all one's for overflow
-            x = 32'b11111111111111111111111111111111;
-            y = 32'b11111111111111111111111111111111;
+            // test for negative add overflow and sameness
+            // equal = high, for 001 zero = high AND overflow = high, for 010 zero = high
+            x = 32'b10000000000000000000000000000000;
+            y = 32'b10000000000000000000000000000000;
+            #10;
+            
+            // test positive add overflow, for 000 zero = high
+            // for 001 overflow = high
+            x = 32'b01010101010101010101010101010101;
+            y = 32'b01111111111111111111111111111111;
+            #10;
+            
+            // test for subtract overflow
+            //for 010 overflow = high
+            x = 32'b10000000000000000000000000000110;
+            y = 32'b01111111111111111111111111111110;
             #10;
 
         end
